@@ -1,6 +1,15 @@
 ComfyUI
 =======
 The most powerful and modular stable diffusion GUI and backend.
+
+Customized repository to ease the setup on NVIDIA-powered linux servers running docker. Ideal for cloud images that already have drivers, docker and NVIDIA Docker toolkit installed.
+
+This image is designed for my own personal use on fresh cloud servers. 
+If you don't want to pay to keep a disk stored in the cloud with a snapshot of the machine or all the required files this repository is also good for you.
+Datacenters have extremely fast connections, so this repository relies on the fast downloads to recreate a running comfyui instance in a couple of commands without any configuration and a couple of minutes of downloads :3
+
+# https://github.com/comfyanonymous/ComfyUI/issues/940
+
 -----------
 ![ComfyUI Screenshot](comfyui_screenshot.png)
 
@@ -69,15 +78,19 @@ Ctrl can also be replaced with Cmd instead for macOS users
 
 # Installing
 
-## Windows
-
-There is a portable standalone build for Windows that should work for running on Nvidia GPUs or for running on your CPU only on the [releases page](https://github.com/comfyanonymous/ComfyUI/releases).
-
 ### [Direct link to download](https://github.com/comfyanonymous/ComfyUI/releases/download/latest/ComfyUI_windows_portable_nvidia_cu121_or_cpu.7z)
 
-Simply download, extract with [7-Zip](https://7-zip.org) and run. Make sure you put your Stable Diffusion checkpoints/models (the huge ckpt/safetensors files) in: ComfyUI\models\checkpoints
-
 If you have trouble extracting it, right click the file -> properties -> unblock
+
+## Docker
+
+Pull this repository: `git clone git@github.com:rickycorte/ComfyUI-batteries-included.git && cd ComfyUI-batteries-included`
+
+Build the containers: `docker compose build`
+
+Download starter models: `sh mdown.sh`
+
+Run the containers: `docker compose up -d`
 
 #### How do I share models between another UI and ComfyUI?
 
@@ -175,6 +188,9 @@ Try running it with this command if you have issues:
 For 6700, 6600 and maybe other RDNA2 or older: ```HSA_OVERRIDE_GFX_VERSION=10.3.0 python main.py```
 
 For AMD 7600 and maybe other RDNA3 cards: ```HSA_OVERRIDE_GFX_VERSION=11.0.0 python main.py```
+Comfy ui will run on `<server ip>:8188`
+
+**Note:** `./input`, `./output`, `./models` folders are shared with the container, this makes it easy to add data inside the container.
 
 # Notes
 
@@ -218,7 +234,6 @@ The default installation includes a fast latent preview method that's low-resolu
 ### Why did you make this?
 
 I wanted to learn how Stable Diffusion worked in detail. I also wanted something clean and powerful that would let me experiment with SD without restrictions.
-
 ### Who is this for?
 
 This is for anyone that wants to make complex workflows with SD or that wants to learn more how SD works. The interface follows closely how SD works and the code should be much more simple to understand than other SD UIs.
